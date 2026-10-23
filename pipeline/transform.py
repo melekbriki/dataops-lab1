@@ -1,6 +1,7 @@
 import pandas as pd
 
 MAX_UNIT_PRICE = 1000
+ALLOWED_COUNTRIES = ["France", "Germany", "Italy", "Morocco", "Tunisia"]
 
 
 def _flag(df, mask, reason):
@@ -53,6 +54,13 @@ def clean_orders(df):
         df,
         df.duplicated("order_id", keep="first"),
         "duplicate_order_id"
+    )
+
+    # Rule 6 - Validity: country must be allowed
+    _flag(
+        df,
+        ~df["country"].isin(ALLOWED_COUNTRIES),
+        "unknown_country"
     )
 
     # Separate rejected rows from clean rows
