@@ -1,0 +1,42 @@
+
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Raw orders with standardized country and product names"
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - unique
+      - name: country
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null
+
+  - name: clean_orders
+    description: "Orders filtered for basic data quality"
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - unique
+      - name: quantity
+        data_tests:
+          - not_null
+
+  - name: fct_sales_by_country
+    description: "Sales metrics aggregated by country"
+    columns:
+      - name: country
+        data_tests:
+          - not_null
+          - unique
+      - name: nb_orders
+        data_tests:
+          - not_null
+      - name: total_revenue
+        data_tests:
+          - not_null
